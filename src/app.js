@@ -8,7 +8,8 @@ class Timer extends React.Component {
             isOn: false,
             start: 0,
             plus: "+",
-            minus: "-"
+            minus: "-",
+            delay: 1500000,
         }
         this.startTimer = this.startTimer.bind(this)
         this.stopTimer = this.stopTimer.bind(this)
@@ -27,15 +28,18 @@ class Timer extends React.Component {
         }), 1);
     }
     plusTimer() {
-        this.state.running == false
+        this.state.isOn == false
             ? this.setState(prefState => ({
-                time: prefState.time + 300,
-                prevTime: prefState.prevTime + 300,
+                delay: prefState.delay + 300000,
             }))
             : null;
     }
     minusTimer() {
-
+        this.state.isOn == false
+            ? this.setState(prefState => ({
+                delay: prefState.delay - 300000,
+            }))
+            : null;
     }
     stopTimer() {
         this.setState({ isOn: false })
@@ -73,7 +77,7 @@ class Timer extends React.Component {
             <button onClick={this.resetTimer}>reset</button>
         return (
             <div>
-                <h3>timer: {ms(1500000 - this.state.time).format("mm : ss")}</h3>
+                <h3>timer: {ms(this.state.delay - this.state.time).format("mm : ss")}</h3>
                 {start}
                 {resume}
                 {stop}
